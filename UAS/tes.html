@@ -43,20 +43,5 @@ def my_function(*args, **kwargs):
     ndataf = ndata[ndata['Content'].str.contains("|".join(arr), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
     Element('test-output').element.innerText = ndataf
 </py-script>
-<<<<<<< HEAD
     </body>
-=======
-
-tes doang
-
-
-<!-- df=pd.read_excel("TMC(Jaktim Only).xlsx")
-        df1=pd.read_excel("TMC(Scrapping).xlsx")
-        data = df.loc[:,['Date','Content']]
-        data2 = df1.loc[:,['Date','Content']]
-        print(data)
-
-        -->
-</body>
->>>>>>> 01fdcbb989b7f183ad669508ad2c961faa097c13
 </html>
