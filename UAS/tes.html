@@ -1,52 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-    <title>Document</title>
+  <!--<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />-->
+  <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
 </head>
+
 <body>
+  <div>Type an sample input here</div>
+  <input type="text" id="test-input"/>
+  <button id="submit-button" type="submit" pys-onClick="my_function">OK</button>
+  <div id="test-output"></div>
 
 <py-env>
-      - pandas
-    </py-env>
+    - pandas
+</py-env>
 
 <py-script>
-
-import pandas as pd
+from js import console
+import pandas as pd 
 import re
-<!-- src = "D:\Bukan Game\htdocs xampp\Ekstraksi\UAS\TMCJaktim_Only.csv" -->
 from pyodide.http import open_url
-<!-- url_content = open_url("https://raw.githubusercontent.com/Swal27/ekstraksi/d7e25931370769bc0afb8bc2a68ba32d4a38ffdf/TMCJaktim_Only.csv") -->
-url_content = open_url("https://raw.githubusercontent.com/Swal27/ekstraksi/main/jaktim.csv")
-<!-- df=pd.read_csv(src) -->
-df=pd.read_csv(url_content)
-data = df.loc[:,['Date','Content']]
-my_list = ['jaktim', 'jakarta timur', 'Jaktim', 'Jakarta Timur']
-ndata = data[data['Content'].str.contains("|".join(my_list), regex=True,                          
-                                        flags=re.IGNORECASE)].reset_index(drop=True)
+import array
 
-def my_function(jalan):
-
-  ndataf = ndata[data['Content'].str.contains("|".join(jalan), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
-  ndataf.head()
-
-my_function('PGC Cililitan')
+def my_function(*args, **kwargs):
 
 
-<!-- df1=pd.read_excel("./TMC(Scrapping).xlsx") -->
+    url_content = open_url("https://raw.githubusercontent.com/Swal27/ekstraksi/main/jaktim.csv")
+    
+    text = Element('test-input').element.value
+
+    #print('text:', text)
+    console.log(f'text: {text}')
+
+    df=pd.read_csv(url_content) 
+    data = df.loc[:,['Date','Content']] 
+    my_list = ['jaktim', 'jakarta timur', 'Jaktim', 'Jakarta Timur'] 
+    ndata = data[data['Content'].str.contains("|".join(my_list), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
+    arr = []
+    arr.append(text)
+    ndataf = ndata[ndata['Content'].str.contains("|".join(arr), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
+    Element('test-output').element.innerText = ndataf
 </py-script>
-
-
-<!-- df=pd.read_excel("TMC(Jaktim Only).xlsx")
-        df1=pd.read_excel("TMC(Scrapping).xlsx")
-        data = df.loc[:,['Date','Content']]
-        data2 = df1.loc[:,['Date','Content']]
-        print(data)
-
-        -->
-</body>
+    </body>
 </html>
