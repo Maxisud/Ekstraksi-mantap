@@ -1,0 +1,61 @@
+li {
+    list-style-type: none;
+}
+
+.text_detail {
+    text-decoration: none;
+    color: black;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.lacak_detail {
+    padding-top: 10px;
+    padding-left: 140px;
+}
+
+.lacak_detail a{
+    text-decoration: none;
+    color: black;
+}
+
+.lacak_detail a:hover {
+    color: black;
+}
+
+.text_detail a:hover {
+    color: black;
+}
+
+.text_detail a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.gambar{
+    position: absolute;
+    bottom: 0; 
+    right: 0;
+}
+
+.judul{
+    padding-left: 50px;
+    width: 32%;
+    position: absolute;
+    display: inline-block;
+    bottom: 38%;
+    left: 0;
+    
+}
+
+.input-group{
+    position: absolute;
+    right: 0 !important;
+    width: 20% !important;
+    padding-top: 50px !important;   
+    padding-right: 20px;
+}
+
+
+

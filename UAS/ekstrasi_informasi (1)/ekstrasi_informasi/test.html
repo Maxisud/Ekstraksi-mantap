@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <!--<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />-->
+  <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+</head>
+
+<body>
+  <div>Type an sample input here</div>
+  <input type="text" id="test-input"/>
+  <button id="submit-button" type="submit" pys-onClick="my_function">OK</button>
+  <div id="test-output"></div>
+
+<py-env>
+    - pandas
+</py-env>
+
+<py-script>
+from js import console
+import pandas as pd 
+import re
+from pyodide.http import open_url
+import array
+
+def my_function(*args, **kwargs):
+
+
+    url_content = open_url("https://raw.githubusercontent.com/Swal27/ekstraksi/main/jaktim.csv")
+    
+    text = Element('test-input').element.value
+
+    #print('text:', text)
+    console.log(f'text: {text}')
+
+    df=pd.read_csv(url_content) 
+    data = df.loc[:,['Date','Content']] 
+    my_list = ['jaktim', 'jakarta timur', 'Jaktim', 'Jakarta Timur'] 
+    ndata = data[data['Content'].str.contains("|".join(my_list), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
+    arr = []
+    arr.append(text)
+    ndataf = ndata[ndata['Content'].str.contains("|".join(arr), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
+    Element('test-output').element.innerText = ndataf
+</py-script>
+    </body>
+</html>

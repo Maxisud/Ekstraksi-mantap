@@ -8,40 +8,46 @@
 </head>
 
 <body>
-  <div>Type an sample input here</div>
-  <input type="text" id="test-input"/>
-  <button id="submit-button" type="submit" pys-onClick="my_function">OK</button>
-  <div id="test-output"></div>
+        <div>Type an sample input here</div>
+        <input type="text" id="test-input"/>
+        <button id="submit-button" type="submit" pys-onClick="my_function">OK</button>
+        <div id="tanggal"></div>
+        <div id="dari"></div>
+        <div id="menuju"></div>
+        <div id="kondisi"></div>
 
-<py-env>
-    - pandas
-</py-env>
+        <py-env>
+            - pandas
+        </py-env>
 
-<py-script>
-from js import console
-import pandas as pd 
-import re
-from pyodide.http import open_url
-import array
+        <py-script>
+        from js import console
+        import pandas as pd 
+        import re
+        from pyodide.http import open_url
+        import array
 
-def my_function(*args, **kwargs):
+        def my_function(*args, **kwargs):
 
 
-    url_content = open_url("https://raw.githubusercontent.com/Swal27/ekstraksi/main/jaktim.csv")
-    
-    text = Element('test-input').element.value
+            url_content = open_url("https://raw.githubusercontent.com/Swal27/ekstraksi/main/Fixjaktim.csv")
+            
+            text = Element('test-input').element.value
 
-    #print('text:', text)
-    console.log(f'text: {text}')
+            #print('text:', text)
+            console.log(f'text: {text}')
 
-    df=pd.read_csv(url_content) 
-    data = df.loc[:,['Date','Content']] 
-    my_list = ['jaktim', 'jakarta timur', 'Jaktim', 'Jakarta Timur'] 
-    ndata = data[data['Content'].str.contains("|".join(my_list), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
-    arr = []
-    arr.append(text)
-    ndataf = ndata[ndata['Content'].str.contains("|".join(arr), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
-    Element('test-output').element.innerText = ndataf
-</py-script>
+            df=pd.read_csv(url_content) 
+            data = df.loc[:,['date','from','to','condition']] 
+            #my_list = ['jaktim', 'jakarta timur', 'Jaktim', 'Jakarta Timur'] 
+            #ndata = data[data['Content'].str.contains("|".join(my_list), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
+            arr = []
+            arr.append(text)
+            ndataf = data[data['from'].str.contains("|".join(arr), regex=True, flags=re.IGNORECASE)].reset_index(drop=True)
+            Element('tanggal').element.innerText = ndataf['date'].to_string(index=False)
+            Element('dari').element.innerText = ndataf['from'].to_string(index=False)
+            Element('menuju').element.innerText = ndataf['to'].to_string(index=False)
+            Element('kondisi').element.innerText = ndataf['condition'].to_string(index=False)
+        </py-script>
     </body>
 </html>
